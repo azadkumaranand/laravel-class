@@ -46,27 +46,37 @@
         </div>
 
         <div class="col-lg-7">
-          <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+          @if($errors->any())
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger">{{$error}}</div>
+            @endforeach
+          @endif
+          @if(session('success'))
+            <div class="alert alert-success">
+              {{session('success')}}
+            </div>
+          @endif
+          <form action="{{route('contact.form.submit')}}" method="post" data-aos="fade-up" data-aos-delay="200">
             <div class="row gy-4">
-
+                @csrf
               <div class="col-md-6">
                 <label for="name-field" class="pb-2">Your Name</label>
-                <input type="text" name="name" id="name-field" class="form-control" required="">
+                <input type="text" name="name" id="name-field" class="form-control" >
               </div>
 
               <div class="col-md-6">
                 <label for="email-field" class="pb-2">Your Email</label>
-                <input type="email" class="form-control" name="email" id="email-field" required="">
+                <input type="email" class="form-control" name="email" id="email-field" >
               </div>
 
               <div class="col-md-12">
                 <label for="subject-field" class="pb-2">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject-field" required="">
+                <input type="text" class="form-control" name="subject" id="subject-field">
               </div>
 
               <div class="col-md-12">
                 <label for="message-field" class="pb-2">Message</label>
-                <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
+                <textarea class="form-control" name="message" rows="10" id="message-field"></textarea>
               </div>
 
               <div class="col-md-12 text-center">
