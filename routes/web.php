@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
+use App\Http\Controllers\ContactFormController;
 
 Route::get('/', function () {
     // $arr = ['azad', 'suman', 'Dev', 'Arvind', 'Abhijeet'];
@@ -32,24 +32,7 @@ Route::get('/team', function(){
     return view('team');
 });
 
-Route::post('/contact-form-submit', function(Request $request){
-    $request->validate([
-        'name'=>'required|string|min:3|max:255',
-        'email'=>'required|string|max:255',
-        'subject'=>'required|string|min:5|max:255',
-        'message'=>'required|string|min:5',
-    ]);
-
-    DB::table('contacts')->insert([
-        'name'=>$request->name,
-        'email'=>$request->email,
-        'subject'=>$request->subject,
-        'message'=>$request->message,
-    ]);
-
-    return redirect()->back()->with('success', 'Form Submitted Successfully!');
-
-})->name('contact.form.submit');
+Route::post('/contact-form-submit', [ContactFormController::class, 'storeData'])->name('contact.form.submit');
 
 // Route::get('about/{id}', function($id){
 //     $arr = ['azad', 'suman', 'Dev', 'Arvind', 'Abhijeet'];
